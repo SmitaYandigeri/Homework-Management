@@ -41,12 +41,15 @@ app.get("/api/student", (request, response) => {
     response.sendFile('student.html', {root: __dirname+'/views'});
 })
 
+app.get("/api/failed", (request, response) => {
+    response.send("<h1>User Does Not Exist, Please Sign Up From Home Page<h1>");
+})
 
 //Hosts the Login API
 app.post("/api/login", function(request,response){
     var username = request.body.loginEmailId;
     var password = request.body.loginPassword;
-
+    console.log(username, password)
     login(username, password, (error, result) => {
         if (error) {
             return error;
@@ -54,18 +57,14 @@ app.post("/api/login", function(request,response){
             var registeredUser = JSON.parse(JSON.stringify(result));
             console.log(registeredUser);
             console.log(registeredUser.length);
-            console.log(registeredUser[0].USER_TYPE);
         
             if(registeredUser.length == 1 && registeredUser[0].USER_TYPE == 'Teacher') {
                 console.log("Redirecting To Teacher Screen");
                 response.redirect("/api/teacher");
-                return;
             } else if (registeredUser.length == 1 && registeredUser[0].USER_TYPE == 'Student') {
                 response.redirect("/api/student");
-                return;
             } else {
-                response.redirect("/");
-                return;
+                response.redirect("/api/failed");
             }
         }
     });
