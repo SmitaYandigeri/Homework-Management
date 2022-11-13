@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { request, response } = require("express");
-const { register, login } = require("./config/database.js")
+const { register, login } = require("./database")
 const bodyParser = require("body-parser");
 const e = require("express");
 const encoder=bodyParser.urlencoded();
@@ -13,17 +13,17 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.set('view engine','ejs');
 
 //Static Files
-app.use(express.static(__dirname +'/public'));
-app.use('css', express.static(__dirname+'/public/css'));
-app.use('img', express.static(__dirname+'/public/img'));
-app.use('js', express.static(__dirname+'/public/js'));
-
-app.set('view engine', 'pug');
+app.use(express.static(__dirname));
+app.use('css', express.static(__dirname+'/client/asset/style'));
+app.use('img', express.static(__dirname+'/client/asset/img'));
+app.use('js', express.static(__dirname+'/client/js'));
+app.set('view engine', 'ejs');
 
 //Starts the Application On Port 5000
-app.listen(process.env.PORT , () => {
+app.listen(+process.env.PORT , () => {
     console.log("Server Started On :: "+process.env.PORT);
 });
 
@@ -33,8 +33,7 @@ app.get("/", (request, response) => {
 })
 
 app.get("/api/teacher", (request, response) => {
-    response.sendFile('teacher.html', {root: __dirname+'/views'});
-    //response.sendFile(__dirname + "/views/teacher.html");
+    response.sendFile(__dirname + "/views/teacher.html");
 })
 
 app.get("/api/student", (request, response) => {
@@ -57,10 +56,11 @@ app.post("/api/login", function(request,response){
             var registeredUser = JSON.parse(JSON.stringify(result));
             console.log(registeredUser);
             console.log(registeredUser.length);
-        
+            
             if(registeredUser.length == 1 && registeredUser[0].USER_TYPE == 'Teacher') {
                 console.log("Redirecting To Teacher Screen");
-                response.redirect("/api/teacher");
+                var name1=registeredUser[0].FIRST_NAME +' '+ registeredUser[0].LAST_NAME;
+                response.render('teacher', {name:name1});
             } else if (registeredUser.length == 1 && registeredUser[0].USER_TYPE == 'Student') {
                 response.redirect("/api/student");
             } else {
