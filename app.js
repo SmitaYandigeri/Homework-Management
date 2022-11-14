@@ -3,9 +3,10 @@ const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { request, response } = require("express");
-const { register, login } = require("./database")
+const { register, login, findFullName } = require("./database")
 const bodyParser = require("body-parser");
 const e = require("express");
+const session = require("express-session");
 const encoder=bodyParser.urlencoded();
 
 
@@ -27,21 +28,16 @@ app.listen(+process.env.PORT , () => {
     console.log("Server Started On :: "+process.env.PORT);
 });
 
+app.use(session({
+     secret: process.env.SESSION_KEY,
+     resave: false,
+     saveUninitialized: false
+    })
+)
+
 //render home page
 app.get("/", (request, response) => {
     response.sendFile('index.html', {root: __dirname+'/views'});
-})
-
-app.get("/api/teacher", (request, response) => {
-    response.sendFile(__dirname + "/views/teacher.html");
-})
-
-app.get("/api/student", (request, response) => {
-    response.sendFile('student.html', {root: __dirname+'/views'});
-})
-
-app.get("/api/failed", (request, response) => {
-    response.send("<h1>User Does Not Exist, Please Sign Up From Home Page<h1>");
 })
 
 //Hosts the Login API
@@ -54,17 +50,24 @@ app.post("/api/login", function(request,response){
             return error;
         } else {
             var registeredUser = JSON.parse(JSON.stringify(result));
-            console.log(registeredUser);
-            console.log(registeredUser.length);
-            
-            if(registeredUser.length == 1 && registeredUser[0].USER_TYPE == 'Teacher') {
-                console.log("Redirecting To Teacher Screen");
-                var name1=registeredUser[0].FIRST_NAME +' '+ registeredUser[0].LAST_NAME;
-                response.render('teacher', {name:name1});
-            } else if (registeredUser.length == 1 && registeredUser[0].USER_TYPE == 'Student') {
-                response.redirect("/api/student");
+            if(registeredUser.length == 1) {
+                const user = registeredUser[0];
+
+                if (user.USER_TYPE == 'Teacher') {
+                    console.log("Redirecting To Teacher Screen");
+                    request.session.user = user;
+                    request.session.save();
+                    response.redirect(307, "/api/teacher");
+                } else if (user.LAST_NAME == 'Student'){
+                    console.log("Redirecting To Student Screen");
+                    request.session.user = user;
+                    request.session.save();
+                    response.redirect(307, "/api/student");
+                } else {
+                    response.redirect("/api/unAuthorized");
+                }
             } else {
-                response.redirect("/api/failed");
+                response.sendFile('403.html', {root: __dirname+'/views'});
             }
         }
     });
@@ -88,4 +91,57 @@ app.post('/api/register', (request, response) => {
         console.log(result)
         return response.json({status:'ok'});
     });
+})
+
+app.post("/api/teacher", (request, response) => {
+    if (request.session.user){
+        console.log(request.body)
+        var username = request.body.loginEmailId;
+        var password = request.body.loginPassword;
+        findFullName(username, password, (error, result) => {
+            if (error) {
+                return error;
+            } else {
+                var registeredUser = JSON.parse(JSON.stringify(result));
+                console.log(registeredUser);
+                var fullName = registeredUser[0].FIRST_NAME +"  "+ registeredUser[0].LAST_NAME;
+                response.render('teacher', {name : fullName});
+            }
+        })
+    } else  {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/teacher", (request, response) => {
+    response.sendFile('403.html', {root: __dirname+'/views'});
+})
+
+app.post("/api/student", (request, response) => {
+    console.log(request.body)
+    var username = request.body.loginEmailId;
+    var password = request.body.loginPassword;
+    if (request.session.user){
+        findFullName(username, password, (error, result) => {
+            if (error) {
+                return error;
+            } else {
+                var registeredUser = JSON.parse(JSON.stringify(result));
+                console.log(registeredUser);
+                var fullName = registeredUser[0].FIRST_NAME +"  "+ registeredUser[0].LAST_NAME;
+                response.render('student', {name : fullName});
+            }
+        })
+    } else  {
+        response.redirect("/api/forbidden");
+    }
+})
+
+app.get("/api/student", (request, response) => {
+    response.sendFile('403.html', {root: __dirname+'/views'});
+})
+
+app.get("/api/logout",(request, response) => {
+    request.session.destroy();
+    response.redirect("/")
 })

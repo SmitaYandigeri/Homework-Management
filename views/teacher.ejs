@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Portal</title>
     <link rel="stylesheet" href="/client/assets/style/teacher.css"> 
+    <link rel="stylesheet" href="/client/assets/style/myClasses.css"> 
+    
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
    
@@ -51,7 +53,7 @@
               </a>
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Teacher Name</a>
+                  <a class="nav-link" href="#"> <%=name %> </a>
                 </li>
               </ul>
 
@@ -73,7 +75,7 @@
                       <a class="dropdown-item" href="#">Settings</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">Logout</a>
+                      <a class="dropdown-item" href="/api/logout">Logout</a>
                     </li>
                   </ul>
                 </li>
@@ -99,12 +101,15 @@
                   </ul>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" onclick="loadContent('#profile+')"> profile </a>
+                  <a class="nav-link" href="#" onclick="loadContent('#profile+')"> Profile </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/api/logout" onclick="loadContent('#profile+')"> Logout </a>
                 </li>
             </nav>
             <!-- ============= COMPONENT END// ============== -->
           </aside>
-          <main class="col-lg-9">
+          <main class="sidebar col-lg-9">
             <div class="main-content">
               <div class="displayInLine" id="loadOnClick" style="width:100%; float: right;">
   
@@ -121,8 +126,53 @@
               </div>
 
               <div id="myClass" class="displayOnClick">
-                <h1>Procedure pages</h1>
-                <p>This is the Procedure pages for employees</p>
+                    <!-- Header -->
+                        <header id="header">
+                          <nav>
+                              <div class="container">
+                                  <div class="text-center">
+                                      <a href="/" class="nav-brand text-dark">Classes Management</a>
+                                  </div>
+                              </div>
+                          </nav>
+                        </header>
+                  <!-- /Header -->
+
+                      <!-- Main Site -->
+                      <main id="site-main">
+                          <div class="container">
+                  
+                              <!-- form handling -->
+                              <form action="/" method="POST">
+                                  <table class="table">
+                                      <thead class="thead-dark">
+                                          <tr>
+                                              <th>Serial No.</th>
+                                              <th>Class Name</th>
+                                              <th>Class Code</th>
+                                              <th>Action</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>1</td>
+                                              <td>My First Class</td>
+                                              <td>123456</td>
+                                              <td>
+                                                  <a href="#" class="btn border-shadow update">
+                                                      <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                                                  </a>
+                                                  <a class="btn border-shadow delete">
+                                                      <span class="text-gradient"><i class="fas fa-times"></i></span>
+                                                  </a>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </form>
+                          </div>
+                      </main>
+                  <!-- /Main Site -->
               </div>
 
               <div id="addClass" class="displayOnClick">
@@ -146,6 +196,11 @@
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
 <script src="/client/js/navigation.js"></script>
+<script type="text/javascript">
+  function preventBack(){window.history.forward()};
+  setTimeout("preventBack()",0);
+  window.onunload=function(){null;}
+</script>
 </body>
 </html>
     

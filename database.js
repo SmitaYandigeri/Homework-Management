@@ -38,5 +38,17 @@ const connection = mysql.createPool({
                 callback(null, result)
             }
         });  
+    }, 
+
+    findFullName : (username, password, callback) => {
+        const FIND_NAME = "SELECT FIRST_NAME, LAST_NAME FROM HOMEWORK.REGISTERED_USERS WHERE EMAIL_ID = ? AND USER_PASSWORD = ?";
+        connection.query(FIND_NAME, [username, password], 
+            (error, result, fields) => {
+            if (error) {
+                callback(error);
+            }else {
+                callback(null, result)
+            }
+        });  
     }
   };
