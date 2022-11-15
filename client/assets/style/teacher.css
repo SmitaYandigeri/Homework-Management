@@ -3,8 +3,12 @@ body {
 }
 @media (min-width: 991.98px) {
   main {
-    padding-left: 240px;
+    /* padding-left: 240px; */
   }
+}
+
+.navbar-top {
+  margin-left: 8.7%;
 }
 
 /* Sidebar */
@@ -66,4 +70,8 @@ float: right;
 
 .displayOnClick{
 display: none;
+}
+
+.row-space {
+  margin-bottom: 15px;
 }

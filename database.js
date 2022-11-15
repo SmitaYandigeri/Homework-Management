@@ -1,7 +1,7 @@
 const mysql =  require("mysql");
 const dotenv = require("dotenv");
+const moment = require("moment");
 
-let dbInstance = null;
 dotenv.config();
 
 const connection = mysql.createPool({
@@ -29,6 +29,7 @@ const connection = mysql.createPool({
     },
 
     login : (username, password, callback) => {
+        console.log("Calling DB")
         const LOGIN_QUERY = "SELECT * FROM HOMEWORK.REGISTERED_USERS WHERE EMAIL_ID = ? AND USER_PASSWORD = ?";
         connection.query(LOGIN_QUERY, [username, password], 
             (error, result, fields) => {
@@ -50,5 +51,20 @@ const connection = mysql.createPool({
                 callback(null, result)
             }
         });  
-    }
+    },
+    addClass : (data, user , callback)=>{
+        const ADDCLASS_QUERY= "INSERT INTO HOMEWORK.CLASS(TEACHER_EMAIL_ID, TEACHER_NAME, CLASS_NAME, CLASS_CODE, CREATE_TS)" +
+        "VALUES(?,?,?,?,?);";
+        const createTs = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+        var teacherFullName = user.FIRST_NAME + user.LAST_NAME;
+        connection.query(ADDCLASS_QUERY, [user.EMAIL_ID, teacherFullName, data.body.className, data.body.classNumber, 
+            createTs],
+            (error, result, fields) => {
+                if (error) {
+                    callback(error);
+                }else {
+                    callback(null, result)
+                }
+    });
+  }
   };

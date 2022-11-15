@@ -42,10 +42,3 @@ function loadContent(selector){
     $("#loadOnClick").html($(selector).html());
     console.log('load');
 };
-
-
-$(document).ready(function(){
-
-    loadContent("#userGuide");
-
-});
