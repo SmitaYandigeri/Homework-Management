@@ -2,8 +2,8 @@
 
 :root{
     --dark: #2b2d42;
-    --light: #adb5bd;
-    --border: #dee2e6;
+    --light: #559fe9;
+    --border: #2b2c2d;
     --border-btn: #edf2f4;
 }
 
@@ -67,7 +67,7 @@ a {
 
 #header nav{
     top: 70px;
-    background-color: hsl(165, 25%, 97%);
+    background-color: hsl(165, 86%, 50%);
     padding: 1em 0;
     width: 100%;
 }

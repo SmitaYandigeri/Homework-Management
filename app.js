@@ -2,13 +2,12 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { request, response } = require("express");
+const { request, response, application } = require("express");
 const { register, login, findFullName , addClass} = require("./database")
 const bodyParser = require("body-parser");
 const e = require("express");
 const session = require("express-session");
 const encoder=bodyParser.urlencoded();
-
 
 dotenv.config();
 app.use(cors());
@@ -21,7 +20,6 @@ app.use(express.static(__dirname));
 app.use('css', express.static(__dirname+'/client/asset/style'));
 app.use('img', express.static(__dirname+'/client/asset/img'));
 app.use('js', express.static(__dirname+'/client/js'));
-app.set('view engine', 'ejs');
 
 //Starts the Application On Port 5000
 app.listen(+process.env.PORT , () => {
@@ -38,9 +36,6 @@ app.use(session({
 //render home page
 app.get("/", (request, response) => {
     response.sendFile('index.html', {root: __dirname+'/views'});
-})
-app.get("/api/homework", (request, response) => {
-    response.sendFile('homework.html', {root: __dirname+'/views'});
 })
 
 //Hosts the Login API
@@ -134,7 +129,7 @@ app.post("/api/teacher", (request, response) => {
                 var registeredUser = JSON.parse(JSON.stringify(result));
                 console.log(registeredUser);
                 var fullName = registeredUser[0].FIRST_NAME +"  "+ registeredUser[0].LAST_NAME;
-                response.render('teacher', {name : fullName});
+                response.render('teacher-Home', {name : fullName});
             }
         })
     } else  {
@@ -173,4 +168,36 @@ app.get("/api/student", (request, response) => {
 app.get("/api/logout",(request, response) => {
     request.session.destroy();
     response.redirect("/")
+})
+
+app.get("/api/profile", (request, response) => {
+    if (request.session.user){
+        response.render('teacher-profile');
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/class", (request, response) => {
+    if (request.session.user){
+        response.render('teacher-class');
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/homework", (request, response) => {
+    if (request.session.user){
+        response.render('teacher-homework');
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/schedule", (request, response) => {
+    if (request.session.user){
+        response.render('teacher-schedule');
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
 })
