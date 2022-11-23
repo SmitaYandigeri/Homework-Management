@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teacher Portal</title>
-  <link rel="stylesheet" href="../client/assets/style/teacherHome.css">
+  <link rel="stylesheet" href="../client/assets/style/teacher-home.css">
+  <link rel="stylesheet" href="../client/assets/style/teacher-class.css">
   <script src="https://kit.fontawesome.com/fd7e252455.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
   <script>
@@ -20,7 +21,11 @@
 
 <body>
   <nav>
-    <label class="logo">HomeWork</label>
+    <label href= "/api/refresh" class="logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/005/083/199/non_2x/an-icon-design-of-homework-in-flat-outline-design-vector.jpg" 
+      height="40" alt="Student Homework" loading="lazy" />
+      <span style="width: 5px;"></span> HomeWork
+    </label>
       <ul>
         <li><a href="/api/profile">Profile</a></li>
         <li><a href="/api/class">MyClass</a></li>
@@ -33,7 +38,69 @@
       </label>
   </nav>
   <div>
-    <h1>This is my homework Page</h1>
+    <main id="site-main">
+      <div class="container">
+        <header id="header">
+          <nav>
+            <div class="text-center">
+              <a href="#" class="nav-brand text-dark">HomeWork Management</a>
+            </div>
+          </nav>
+        </header>
+        <div class="box-nav d-flex justify-between">
+            <button class="border-shadow" id="btnAddHW" 
+            style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
+              <span class ="text-gradient">Add HomeWork<i class="fas fa-user"></i></span> 
+            </button>
+            <button class="border-shadow" id="btnback" 
+              style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
+              <span class ="text-gradient">Back To Class<i class="fas fa-user"></i></span> 
+            </button>
+        </div>
+
+          <!-- form handling -->
+        <form>
+            <table class="table" id="tblData">
+                <thead class="thead-dark">
+                    <tr>
+                      <th>Serial No </th>
+                      <th>HomeWork Name </th>
+                      <th>Due Date</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% if (homework) { %>
+                    <% for(var i = 0; i < homework.length; i++) { %>
+                      <tr>
+                          <td class="tdSlNo"><%= i + 1 %></td>
+                          <td class="tdHWName"><%= homework[i].HOMEWORK_NAME %></td>
+                          <td class="tdHWDueDate"><%= homework[i].HOMEWORK_DUE %></td>
+                          <td class="tdHWDescription"><%= homework[i].HOMEWORK_DESCRIPTION %></td>
+                          <td class="tdHwAction">
+                            <a href="" title="View Homework" class="btn border-shadow view">
+                                <span class="text-gradient"><i class="fas fa-eye"></i></span>
+                            </a>
+                            <a href="#" title="Add Homework" class="btn border-shadow add">
+                              <span class="text-gradient"><i class="fas fa-plus"></i></span>
+                            </a>
+                            <a href="#" title="Edit Class" class="btn border-shadow edit">
+                              <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                            </a>
+                            <a href="#" title="Delete Class" class="btn border-shadow delete">
+                              <span class="text-gradient"><i class="fas fa-solid fa-trash"></i></i></span>
+                            </a>
+                          </td>
+                      </tr>
+                    <% } %>
+                  <% } %> 
+                </tbody>
+            </table>
+        </form>
+      </div>
+    </main>
   </div>
+  <script src="../client/js/teacher-homework.js"></script>
 </body>
 </html>

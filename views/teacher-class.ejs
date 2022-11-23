@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teacher Portal</title>
-  <link rel="stylesheet" href="../client/assets/style/teacherHome.css">
+  <link rel="stylesheet" href="../client/assets/style/teacher-home.css">
+  <link rel="stylesheet" href="../client/assets/style/teacher-class.css">
   <script src="https://kit.fontawesome.com/fd7e252455.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
   <script>
@@ -20,7 +21,10 @@
 
 <body>
   <nav>
-    <label class="logo">HomeWork</label>
+    <label href= "/api/refresh" class="logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/005/083/199/non_2x/an-icon-design-of-homework-in-flat-outline-design-vector.jpg" 
+      height="40" alt="Student Homework" loading="lazy" />
+      <span style="width: 5px;"></span> HomeWork</label>
       <ul>
         <li><a href="/api/profile">Profile</a></li>
         <li><a class="active" href="/api/class">MyClass</a></li>
@@ -32,86 +36,64 @@
         <i class="fa fas fa-bars"></i>
       </label>
   </nav>
+
   <div>
-    <div id="myClass" class="displayOnClick">
-      <!-- Header -->
-            <div class="container">
-              <div class="table-wrapper">
-                <div class="table-title">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h2>Class <b>Management</b></h2>
-                    </div>
-                    <div class="col-sm-4">
-                      <button type="button" class="btn btn-info add-new">
-                        <i class="fa fa-plus"></i> Add New
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <table class="table table-bordered">
-                  <thead>
+    <main id="site-main">
+      <div class="container">
+        <header id="header">
+          <nav>
+            <div class="text-center">
+              <a href="/api/class" class="nav-brand text-dark">Class Management</a>
+            </div>
+          </nav>
+        </header>
+        <div class="box-nav d-flex justify-between">
+            <button class="border-shadow" id="btnAdd" 
+            style="height:40px; width:120px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
+              <span class ="text-gradient">Add Class <i class="fas fa-user"></i></span> 
+            </button>
+        </div>
+
+          <!-- form handling -->
+        <form>
+            <table class="table" id="tblData">
+                <thead class="thead-dark">
                     <tr>
-                      <th>Serial No: </th>
+                      <th>Serial No </th>
                       <th>Class Name </th>
                       <th>Class Code</th>
+                      <th>Invitation Code</th>
                       <th>Actions</th>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Math</td>
-                      <td>8765</td>
-                      <td>
-                        <a class="add" title="Add" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                        <a class="edit" title="Edit" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                        <a class="delete" title="Delete" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>English</td>
-                      <td>8765</td>
-                      <td>
-                        <a class="add" title="Add" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                        <a class="edit" title="Edit" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                        <a class="delete" title="Delete" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Computer</td>
-                      <td>8453</td>
-                      <td>
-                        <a class="add" title="Add" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                        <a class="edit" title="Edit" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                        <a class="delete" title="Delete" data-toggle="tooltip"
-                          ><i class="material-icons"></i></a
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-    </div>
+                </thead>
+                <tbody>
+                  <% if (classes) { %>
+                    <% for(var i = 0; i < classes.length; i++) { %>
+                      <tr>
+                          <td class="tdSlNo"><%= i + 1 %></td>
+                          <td class="tdClassName"><%= classes[i].CLASS_NAME %></td>
+                          <td class="tdClassCode"><%= classes[i].CLASS_CODE %></td>
+                          <td class="tdInvitation"><%= classes[i].INVITATION_CODE %></td>
+                          <td class="tdAction">
+                            <a href="/api/homework" title="View Homework" class="btn border-shadow view">
+                                <span class="text-gradient"><i class="fas fa-eye"></i></span>
+                            </a>
+                            <a href="#" title="Edit Class" class="btn border-shadow edit">
+                              <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                            </a>
+                            <a href="#" title="Delete Class" class="btn border-shadow delete">
+                              <span class="text-gradient"><i class="fas fa-solid fa-trash"></i></i></span>
+                            </a>
+                          </td>
+                      </tr>
+                    <% } %>
+                  <% } %> 
+                </tbody>
+            </table>
+        </form>
+      </div>
+    </main>
   </div>
+  <script src="../client/js/teacher-class.js"></script>
 </body>
 </html>
