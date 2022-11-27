@@ -43,18 +43,30 @@
         <header id="header">
           <nav>
             <div class="text-center">
-              <a href="#" class="nav-brand text-dark">HomeWork Management</a>
+                <% if (className && invitationCode) { %>
+                  <a href="#" class="nav-brand text-dark">HomeWorks For <div id="className"><%=className%></div> - 
+                    <span id="invitationCode">(<%= invitationCode %>)</span></a>
+                <%} else { %>
+                  <a href="#" class="nav-brand text-dark">HomeWorks Management</a>  
+                <% } %>
             </div>
           </nav>
         </header>
         <div class="box-nav d-flex justify-between">
+          <% if (className && invitationCode) { %>
             <button class="border-shadow" id="btnAddHW" 
             style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
-              <span class ="text-gradient">Add HomeWork<i class="fas fa-user"></i></span> 
+              <span class ="text-gradient">Add HomeWork<i class="fas fa-solid fa-user"></i></span> 
             </button>
+          <%} else { %>
+            <button class="border-shadow" id="btnAddHW" hidden
+            style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
+              <span class ="text-gradient">Add HomeWork<i class="fas fa-solid fa-user"></i></span> 
+            </button>
+          <% } %>
             <button class="border-shadow" id="btnback" 
               style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
-              <span class ="text-gradient">Back To Class<i class="fas fa-user"></i></span> 
+              <span class ="text-gradient">Back To Class<i class="fas fa-solid fa-user"></i></span> 
             </button>
         </div>
 
@@ -67,29 +79,27 @@
                       <th>HomeWork Name </th>
                       <th>Due Date</th>
                       <th>Description</th>
+                      <th>Homework Docs</th>
+                      <th hidden>HW ID</th>
                       <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                  <% if (homework) { %>
-                    <% for(var i = 0; i < homework.length; i++) { %>
+                  <% if (homeworks) { %>
+                    <% for(var i = 0; i < homeworks.length; i++) { %>
                       <tr>
                           <td class="tdSlNo"><%= i + 1 %></td>
-                          <td class="tdHWName"><%= homework[i].HOMEWORK_NAME %></td>
-                          <td class="tdHWDueDate"><%= homework[i].HOMEWORK_DUE %></td>
-                          <td class="tdHWDescription"><%= homework[i].HOMEWORK_DESCRIPTION %></td>
+                          <td class="tdHWName" id="tdHWNameId"><%= homeworks[i].HW_NAME %></td>
+                          <td class="tdHWDueDate"><%= homeworks[i].HW_DUE_DT %></td>
+                          <td class="tdHWDescription"><%= homeworks[i].HW_DESCRIPTION %></td>
+                          <td class="tdHWDocs"><%= homeworks[i].HW_DOCS %></td>
+                          <td class="tdHWId" hidden><%= homeworks[i].HW_ID %></td>
                           <td class="tdHwAction">
-                            <a href="" title="View Homework" class="btn border-shadow view">
-                                <span class="text-gradient"><i class="fas fa-eye"></i></span>
+                            <a href="#" title="Edit HomeWork" class="btn border-shadow edit">
+                              <span class="text-gradient"><i class="fas fa-solid fa-pencil-alt"></i></span>
                             </a>
-                            <a href="#" title="Add Homework" class="btn border-shadow add">
-                              <span class="text-gradient"><i class="fas fa-plus"></i></span>
-                            </a>
-                            <a href="#" title="Edit Class" class="btn border-shadow edit">
-                              <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
-                            </a>
-                            <a href="#" title="Delete Class" class="btn border-shadow delete">
-                              <span class="text-gradient"><i class="fas fa-solid fa-trash"></i></i></span>
+                            <a href="#" title="Delete HomeWork" class="btn border-shadow delete">
+                              <span class="text-gradient"><i class="fas fa-solid fa-solid fa-trash"></i></i></span>
                             </a>
                           </td>
                       </tr>

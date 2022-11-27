@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal</title>
+  <link rel="stylesheet" href="../client/assets/style/teacher-home.css">
+  <link rel="stylesheet" href="../client/assets/style/teacher-class.css">
+  <script src="https://kit.fontawesome.com/fd7e252455.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#icon').click(function(){
+        $('ul').toggleClass('show');
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <nav>
+    <label href= "/api/refresh" class="logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/005/083/199/non_2x/an-icon-design-of-homework-in-flat-outline-design-vector.jpg" 
+      height="40" alt="Student Homework" loading="lazy" />
+      <span style="width: 5px;"></span> HomeWork
+    </label>
+      <ul>
+        <li><a href="/api/student-profile">Profile</a></li>
+        <li><a href="/api/student-class">MyClass</a></li>
+        <li><a class="active" href="/api/student-homework">HomeWork</a></li>
+        <li><a href="/api/student-schedule">Schedule</a></li>
+        <li><a href="/api/logout">Logout</a></li>
+      </ul>
+      <label id="icon">
+        <i class="fa fas fa-bars"></i>
+      </label>
+  </nav>
+  <div>
+    <main id="site-main">
+      <div class="container">
+        <header id="header">
+          <nav>
+            <div class="text-center">
+                <% if (className && invitationCode) { %>
+                  <a href="#" class="nav-brand text-dark">HomeWorks For <div id="className"><%=className%></div> - 
+                    <span id="invitationCode">(<%= invitationCode %>)</span></a>
+                <%} else { %>
+                  <a href="#" class="nav-brand text-dark">HomeWorks Management</a>  
+                <% } %>
+            </div>
+          </nav>
+        </header>
+        <div class="box-nav d-flex justify-between">
+            <button class="border-shadow" id="btnAddHW" hidden
+            style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
+              <span class ="text-gradient">Add HomeWork<i class="fas fa-solid fa-user"></i></span> 
+            </button>
+            <button class="border-shadow" id="btnback" 
+              style="height:40px; width:140px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
+              <span class ="text-gradient">Back To Class<i class="fas fa-solid fa-user"></i></span> 
+            </button>
+        </div>
+
+          <!-- form handling -->
+        <form>
+            <table class="table" id="tblData">
+                <thead class="thead-dark">
+                    <tr>
+                      <th>Serial No </th>
+                      <th>HomeWork Name </th>
+                      <th>Due Date</th>
+                      <th>Description</th>
+                      <th>Homework Docs</th>
+                      <th hidden>HW ID</th>
+                      <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% if (homeworks) { %>
+                    <% for(var i = 0; i < homeworks.length; i++) { %>
+                      <tr>
+                          <td class="tdSlNo"><%= i + 1 %></td>
+                          <td class="tdHWName" id="tdHWNameId"><%= homeworks[i].HW_NAME %></td>
+                          <td class="tdHWDueDate"><%= homeworks[i].HW_DUE_DT %></td>
+                          <td class="tdHWDescription"><%= homeworks[i].HW_DESCRIPTION %></td>
+                          <td class="tdHWDocs"><%= homeworks[i].HW_DOCS %></td>
+                          <td class="tdHWId" hidden><%= homeworks[i].HW_ID %></td>
+                          <td class="tdHwAction">
+
+                          </td>
+                      </tr>
+                    <% } %>
+                  <% } %> 
+                </tbody>
+            </table>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+<script src="../client/js/student-homework.js"></script>
+</html>

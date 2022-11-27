@@ -3,7 +3,10 @@ const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { request, response, application } = require("express");
-const { register, login, findFullName , addClass, updateClass, deleteClass, getClassesForTeacher} = require("./database")
+const { register, login, 
+    addClass, updateClass, deleteClass, getClassesForTeacher, 
+    addTeacherHomework, getHomeWorksForClass, deleteHomework, updateHomework, 
+    getClassesForStudent, joinClassForStudent, getHomeWorksForClassByStudent, dropClassForStudent} = require("./database")
 const bodyParser = require("body-parser");
 const e = require("express");
 const session = require("express-session");
@@ -92,6 +95,7 @@ app.post('/api/register', (request, response) => {
         return response.json({status:'ok'});
     });
 })
+
 app.post('/api/addclass', (request, response) => {
     console.log('Processing AddClass Request...');
     console.log(request.body);
@@ -113,11 +117,74 @@ app.post('/api/addclass', (request, response) => {
     }
 })
 
+app.post('/api/addhomework', (request, response) => {
+    console.log('Processing addHomework Request...');
+    console.log(request.body);
+    if (request.session.user) {
+        addTeacherHomework(request, request.session.user, (error, result) => {
+            if (error) {
+                console.log(error);
+                if (error.code == "ER_DUP_ENTRY" )
+                return response.json({
+                    status: 'error',
+                    error: 'Class Name, Already Exist'
+                });
+                throw error;
+            }
+            return response.json({status:'ok'});
+        });
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
 app.post('/api/updateclass', (request, response) => {
-    console.log('Processing AddClass Request...');
+    console.log('Processing update Class Request...');
     console.log(request.body);
     if (request.session.user) {
         updateClass(request, request.session.user, (error, result) => {
+            if (error) {
+                console.log(error);
+                if (error.code == "ER_DUP_ENTRY" )
+                return response.json({
+                    status: 'error',
+                    error: 'Class Name, Already Exist'
+                });
+                throw error;
+            }
+            return response.json({status:'ok'});
+        });
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.post('/api/updatehomework', (request, response) => {
+    console.log('Processing UpdateHomework Request...');
+    console.log(request.body);
+    if (request.session.user) {
+        updateHomework(request, request.session.user, (error, result) => {
+            if (error) {
+                console.log(error);
+                if (error.code == "ER_DUP_ENTRY" )
+                return response.json({
+                    status: 'error',
+                    error: 'Class Name, Already Exist'
+                });
+                throw error;
+            }
+            return response.json({status:'ok'});
+        });
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.post('/api/deletehomework', (request, response) => {
+    console.log('Processing deleteHomework Request');
+    console.log(request.body);
+    if (request.session.user) {
+        deleteHomework(request, request.session.user, (error, result) => {
             if (error) {
                 console.log(error);
                 if (error.code == "ER_DUP_ENTRY" )
@@ -155,51 +222,16 @@ app.post('/api/deleteclass', (request, response) => {
     }
 })
 
+
 app.post("/api/teacher", (request, response) => {
     if (request.session.user){
-        console.log(request.body)
-        var username = request.body.loginEmailId;
-        var password = request.body.loginPassword;
-        findFullName(username, password, (error, result) => {
-            if (error) {
-                return error;
-            } else {
-                var registeredUser = JSON.parse(JSON.stringify(result));
-                console.log(registeredUser);
-                var fullName = registeredUser[0].FIRST_NAME +"  "+ registeredUser[0].LAST_NAME;
-                response.render('teacher-Home', {name : fullName});
-            }
-        })
+        response.render('teacher-home');
     } else  {
         response.sendFile('403.html', {root: __dirname+'/views'});
     }
 })
 
 app.get("/api/teacher", (request, response) => {
-    response.sendFile('403.html', {root: __dirname+'/views'});
-})
-
-app.post("/api/student", (request, response) => {
-    console.log(request.body)
-    var username = request.body.loginEmailId;
-    var password = request.body.loginPassword;
-    if (request.session.user){
-        findFullName(username, password, (error, result) => {
-            if (error) {
-                return error;
-            } else {
-                var registeredUser = JSON.parse(JSON.stringify(result));
-                console.log(registeredUser);
-                var fullName = registeredUser[0].FIRST_NAME +"  "+ registeredUser[0].LAST_NAME;
-                response.render('student', {name : fullName});
-            }
-        })
-    } else  {
-        response.sendFile('403.html', {root: __dirname+'/views'});
-    }
-})
-
-app.get("/api/student", (request, response) => {
     response.sendFile('403.html', {root: __dirname+'/views'});
 })
 
@@ -258,8 +290,26 @@ app.post("/api/class", (request, response) => {
 
 app.get("/api/homework", (request, response) => {
     if (request.session.user){
-        var homework = [];
-        response.render('teacher-homework', {homework:homework});
+        var homeworks = [];
+        console.log(request.query)
+        var className = request.query.className;
+        var invitationCode = request.query.invitationCode;
+
+        if (invitationCode) {
+            getHomeWorksForClass(invitationCode, request.session.user, (error, result) => {
+                if (error) {
+                    response.end();
+                    console.log("failed To Return Data")
+                    return error;
+                } else {
+                    homeworks = JSON.parse(JSON.stringify(result));
+                    console.log(homeworks)
+                    response.render('teacher-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
+                }
+            });
+        } else {
+            response.render('teacher-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
+        }
     } else {
         response.sendFile('403.html', {root: __dirname+'/views'});
     }
@@ -289,3 +339,118 @@ app.get("/api/refresh", function(request,response){
         response.sendFile('403.html', {root: __dirname+'/views'});
     }
 })
+
+app.post("/api/student", (request, response) => { 
+    console.log("Rendering Student Home...")
+    if (request.session.user){
+        response.render('student-home');
+    } else  {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }    
+})
+
+app.get("/api/student", (request, response) => {
+    response.sendFile('403.html', {root: __dirname+'/views'});
+})
+
+app.get("/api/student-profile", (request, response) => {
+    console.log("Rendering Student Profile...")
+    if (request.session.user){
+        response.render('student-profile');
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/student-class", (request, response) => {
+    if (request.session.user){
+        console.log("rendering classes ")
+        getClassesForStudent(request.session.user, (error, result) => {
+            if (error) {
+                response.end();
+                console.log("failed To Return Data")
+                return error;
+            } else {
+                var registeredUser = JSON.parse(JSON.stringify(result));
+                console.log(registeredUser)
+                response.render('student-class', {classes : registeredUser})
+            }
+        });
+        
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/student-homework", (request, response) => {
+    console.log("Rendering Student Homework...")
+    if (request.session.user){
+        var homeworks = [];
+        console.log(request.query)
+        var className = request.query.className;
+        var invitationCode = request.query.invitationCode;
+        if (invitationCode) {
+            getHomeWorksForClassByStudent(invitationCode, request.session.user, (error, result) => {
+                if (error) {
+                    response.end();
+                    console.log("failed To Return Data")
+                    return error;
+                } else {
+                    homeworks = JSON.parse(JSON.stringify(result));
+                    console.log(homeworks)
+                    response.render('student-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
+                }
+            });
+        } else {
+            response.render('student-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
+        }
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.get("/api/student-schedule", (request, response) => {
+    console.log("Rendering Student Schedule...")
+    if (request.session.user){
+        response.render('student-schedule');
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.post('/api/student-joinclass', (request, response) => {
+    console.log('Processing AddClass Request For Student...');
+    console.log(request.body);
+    if (request.session.user) {
+        joinClassForStudent(request, request.session.user, (error, result) => {
+            if (error) {
+                console.log(error);
+                if (error.code == "ER_DUP_ENTRY" )
+                return response.json({
+                    status: 'error',
+                    error: 'Class Name, Already Exist'
+                });
+                throw error;
+            }
+            return response.json({status:'ok'});
+        });
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+
+app.post('/api/student-dropclass', (request, response) => {
+    console.log('Processing deleteClass Request...');
+    console.log(request.body);
+    if (request.session.user) {
+        dropClassForStudent(request, request.session.user, (error, result) => {
+            if (error) {
+                throw error;
+            }
+            return response.json({status:'ok'});
+        });
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
+

@@ -24,7 +24,8 @@
     <label href= "/api/refresh" class="logo">
       <img src="https://static.vecteezy.com/system/resources/previews/005/083/199/non_2x/an-icon-design-of-homework-in-flat-outline-design-vector.jpg" 
       height="40" alt="Student Homework" loading="lazy" />
-      <span style="width: 5px;"></span> HomeWork</label>
+      <span style="width: 5px;"></span> HomeWork
+    </label>
       <ul>
         <li><a href="/api/profile">Profile</a></li>
         <li><a class="active" href="/api/class">MyClass</a></li>
@@ -50,7 +51,7 @@
         <div class="box-nav d-flex justify-between">
             <button class="border-shadow" id="btnAdd" 
             style="height:40px; width:120px; font-family: monsterrat;cursor: pointer;font-size: 15px;">
-              <span class ="text-gradient">Add Class <i class="fas fa-user"></i></span> 
+              <span class ="text-gradient">Add Class <i class="fas fa-solid fa-user"></i></span> 
             </button>
         </div>
 
@@ -75,11 +76,11 @@
                           <td class="tdClassCode"><%= classes[i].CLASS_CODE %></td>
                           <td class="tdInvitation"><%= classes[i].INVITATION_CODE %></td>
                           <td class="tdAction">
-                            <a href="/api/homework" title="View Homework" class="btn border-shadow view">
-                                <span class="text-gradient"><i class="fas fa-eye"></i></span>
+                            <a href="#" title="View Homework" class="btn border-shadow view">
+                                <span class="text-gradient"><i class="fas fa-solid fa-eye"></i></span>
                             </a>
                             <a href="#" title="Edit Class" class="btn border-shadow edit">
-                              <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                              <span class="text-gradient"><i class="fas fa-solid fa-pencil-alt"></i></span>
                             </a>
                             <a href="#" title="Delete Class" class="btn border-shadow delete">
                               <span class="text-gradient"><i class="fas fa-solid fa-trash"></i></i></span>

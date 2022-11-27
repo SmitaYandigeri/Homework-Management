@@ -47,10 +47,8 @@ $(document).ready(function () {
         })
         .then(res => res.json());
         
-        location.reload();
-        
+        location.reload();        
     }); 
-
 
     //Edit Class Inline
     $('#tblData').on('click', '.edit', async function () { 
@@ -93,7 +91,7 @@ $(document).ready(function () {
 
     //Delete Class
     $('#tblData').on('click', '.delete', async function () { 
-        console.log("Deleting the page")
+        console.log("Deleting the Class")
         const invitationCode =$(this).parent().parent().find(".tdInvitation").html();
 
         fetch('/api/deleteclass', {
@@ -106,5 +104,20 @@ $(document).ready(function () {
         .then(res => res.json());
         
         location.reload();
-    }); 
+    });
+    
+    //View Homwork Class
+    $('#tblData').on('click', '.view', async function () { 
+        console.log("View Homeworks")
+        const invitationCode = $(this).parent().parent().find(".tdInvitation").html();
+        const className = $(this).parent().parent().find(".tdClassName").html();
+        console.log(className)
+        console.log(invitationCode)
+
+        console.log("Calling with Query params")
+
+        $(location).attr('href','/api/homework?className='+encodeURIComponent(className)+'&invitationCode='+encodeURIComponent(invitationCode));
+    });
+    
+
 });
