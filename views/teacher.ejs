@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/client/assets/style/teacher.css">
   <link rel="stylesheet" href="/client/assets/style/myClasses.css">
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>     
 
 
   <!-- Font Awesome -->
@@ -25,7 +25,7 @@
     crossorigin="anonymous"></script>
 
   <!-- ======= Icons used for dropdown (you can use your own) ======== -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">   
 
 </head>
 
@@ -43,7 +43,7 @@
               <!-- Toggle button -->
               <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
                 aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-solid fa-bars"></i>
               </button>
 
               <!-- Brand -->
@@ -117,7 +117,7 @@
 
               </div>
 
-              <div id="schedule" class="displayOnClick">
+              <div id="schedule" class="displayOnClick">  
                 <h1>Schedule</h1>
                 <p>This is the Statement of purpose for employees</p>
               </div>
@@ -177,17 +177,33 @@
 
               <div id="addClass" class="displayOnClick">
                 <form id="addclass" action="/api/addclass" method="post">
+<<<<<<< HEAD
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Class Name</label>
+                    <input type="class" class="form-control" id="exampleFormControlInput1" placeholder="Class Name">
+                  </div> 
+                  <form id="addclass" action="/api/addclass" method="post">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Class Code</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Class Code">
+=======
                   <div class="form-group row row-space">
                     <label for="teacherName" class="col-sm-4 col-form-label">Teacher Name</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="teacherName" name = "teacherName" placeholder="Teacher Name">
+>>>>>>> develop
                     </div>
-                  </div>
-                  <div class="form-group row row-space">
-                    <label for="className" class="col-sm-4 col-form-label">Class Name</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="className" name = "className" placeholder="Class Name">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">Upload Material</label>
+                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
                     </div>
+<<<<<<< HEAD
+                  <div class="form-group">
+                    <label for="exampleFormControlTextarea1">HomeWork</label>
+                    <textarea class="form-control" id="HomeWork" rows="3"></textarea>
+                  </div>  
+                  
+=======
                   </div>
                   <div class="form-group row row-space">
                     <label for="classNumber" class="col-sm-4 col-form-label">Class Number</label>
@@ -195,6 +211,7 @@
                       <input type="text" class="form-control" id="classNumber" name = "classNumber" placeholder="Class Number">
                     </div>
                   </div>
+>>>>>>> develop
                   <div class="form-group row row-space">
                     <div class="col-sm-10">
                       <button type="submit" class="btn btn-primary">Submit</button>

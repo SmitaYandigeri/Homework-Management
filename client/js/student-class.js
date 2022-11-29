@@ -6,15 +6,15 @@ emptyClassRow = emptyClassRow + "    </td>";
 emptyClassRow = emptyClassRow + "    <td class='tdClassCode'>";
 emptyClassRow = emptyClassRow + "    </td>";
 emptyClassRow = emptyClassRow + "    <td class='tdInvitation'>";
-emptyClassRow = emptyClassRow + "        <input type='text' class='form-control invitationCode' style='height:40px; width:120px; font-family: monsterrat;' placeholder='Enter Invitation Code' />";
+emptyClassRow = emptyClassRow + "        <input type='text' class='form-control invitationCode' style='height:30px; width:120px; font-family: monsterrat;' placeholder='Enter Invitation Code' />";
 emptyClassRow = emptyClassRow + "    </td>";
 emptyClassRow = emptyClassRow + "    <td class='tdAction'>";
-emptyClassRow = emptyClassRow + "        <a title='Save' class='btn border-shadow save'><span class='text-gradient'><i class='fas fa fa-floppy-o'></i></span></a>";
+emptyClassRow = emptyClassRow + "        <a title='Save' class='btn border-shadow save'><span class='text-gradient'><i class='fas fa-save'></i></span></a>";
 emptyClassRow = emptyClassRow + "        <a title='Cancel' class='btn border-shadow cancel'><span class='text-gradient'><i class='fas fa-times'></i></span></a>";
 emptyClassRow = emptyClassRow + "    </td>";
 emptyClassRow = emptyClassRow + "</tr>";
 
-var actionForEdit = "<a title='Join' class='btn border-shadow update'><span class='text-gradient'><i class='fas fa-sharp fa-solid fa-right-to-bracket'></i></i></span></a>"
+var actionForEdit = "<a title='Join' class='btn border-shadow update'><span class='text-gradient'><i class='fas fa-solid fa-right-to-bracket'></i></i></span></a>"
 actionForEdit = actionForEdit + "<a title='Cancel' class='btn border-shadow edit-cancel'><span class='text-gradient'><i class='fas fa-times'></i></span></a>"
 
 $(document).ready(function () {

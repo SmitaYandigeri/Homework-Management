@@ -6,7 +6,7 @@ const { request, response, application } = require("express");
 const { register, login, 
     addClass, updateClass, deleteClass, getClassesForTeacher, 
     addTeacherHomework, getHomeWorksForClass, deleteHomework, updateHomework, 
-    getClassesForStudent, joinClassForStudent, getHomeWorksForClassByStudent, dropClassForStudent} = require("./database")
+    getClassesForStudent, joinClassForStudent, getHomeWorksForClassByStudent, dropClassForStudent, addHomeworkSubmission} = require("./database")
 const bodyParser = require("body-parser");
 const e = require("express");
 const session = require("express-session");
@@ -454,3 +454,17 @@ app.post('/api/student-dropclass', (request, response) => {
     }
 })
 
+app.post('/api/student-submission', (request, response) => {
+    console.log('Processing Student Submission...');
+    console.log(request.body);
+    if (request.session.user) {
+        addHomeworkSubmission(request, request.session.user, (error, result) => {
+            if (error) {
+                throw error;
+            }
+            return response.json({status:'ok'});
+        });
+    } else {
+        response.sendFile('403.html', {root: __dirname+'/views'});
+    }
+})
