@@ -235,15 +235,28 @@ const connection = mysql.createPool({
     },
 
     addHomeworkSubmission : (data, user , callback)=>{
-        const ADD_SUBMISSION= "INSERT INTO HOMEWORK.S_SUBMISSIONS VALUES (?,?,?,?,?,?,?)";
+        const ADD_SUBMISSION= "INSERT INTO HOMEWORK.S_SUBMISSIONS VALUES (?,?,?,?,?,?,?,?)";
         const createTs = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        var studentFullName = user.FIRST_NAME + user.LAST_NAME;
+        var studentFullName = user.FIRST_NAME + " " + user.LAST_NAME;
         connection.query(ADD_SUBMISSION, [user.EMAIL_ID, studentFullName, data.body.invitationCode, data.body.hwID,
-            data.body.fileName, data.body.fileData, createTs],
+            data.body.fileName, data.body.fileData, createTs, data.body.hwName],
             (error, result, fields) => {
                 if (error) {
                     callback(error);
                 } 
         });
     },
+
+    getSubmissionForHomework : (invitationCode, hwID, callback)=>{
+        const FETCH_SUBMISSION_FOR_HOMEWORK = "SELECT SUB.*, CLA.CLASS_NAME FROM HOMEWORK.S_SUBMISSIONS SUB " +
+        " LEFT JOIN HOMEWORK.CLASS CLA ON SUB.INVITATION_CODE = CLA.INVITATION_CODE WHERE SUB.INVITATION_CODE = ? AND SUB.HW_ID = ? ORDER BY SUB.CREATE_TS;";
+        connection.query(FETCH_SUBMISSION_FOR_HOMEWORK, [invitationCode, hwID],
+            (error, result, fields) => {
+                if (error) {
+                    callback(error);
+                } else {
+                    callback(null, result)
+                }
+        });
+    }, 
   };

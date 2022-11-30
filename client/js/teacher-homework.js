@@ -167,5 +167,18 @@ $(document).ready(function () {
         location.reload();
     });
   
-    
+    //View Homwork Class
+    $('#tblData').on('click', '.submissions', async function () { 
+        console.log("View submissions")
+        let code = document.getElementById("invitationCode").innerHTML;
+        let invitationCode = code.substring(1, code.length-1);
+
+        const hwID =$(this).parent().parent().find(".tdHWId").html();
+
+        console.log(hwID)
+        console.log(invitationCode)
+
+        $(location).attr('href','/api/submission?hwID='+encodeURIComponent(hwID)+'&invitationCode='+encodeURIComponent(invitationCode));
+    });
+
 });

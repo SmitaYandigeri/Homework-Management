@@ -61,14 +61,16 @@ a {
 }
 
 .text-gradient{
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    /*background: linear-gradient(to right, #8e2de2, #4a00e0);*/
+    background-color: #784BA0; background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #header nav{
-    background-color: #34495e;
+    /*background-color: #34495e;*/
+    background-color: #784BA0; background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
     padding: 1em 0;
     width: 100%;
     
@@ -107,7 +109,8 @@ table{
 }
 
 .table tr:hover{
-    background-color:#06d6a0 ;
+    /*background-color:#06d6a0 ;*/
+    background-color: #784BA0;
 }
 
 .table tr:hover td > a{
@@ -117,7 +120,8 @@ table{
 .table .thead-dark th{
     color: #fff;
     background-color: var(--dark) ;
-    border-color: #34495e;
+    /* border-color: #34495e; */
+    background-color: #784BA0; 
 }
 
 @media only screen and (max-width: 1024px){
@@ -200,7 +204,8 @@ table{
 }
 
 .radio input[type='radio']:checked + .radio-label:before{
-    background-color: #16db93;
+    /* background-color: #16db93; */
+    background-color: #784BA0;
     box-shadow: inset 0 0 0 4px #e9ecef;
 }
 
@@ -211,15 +216,16 @@ table{
 
 .radio input[type='radio']:disabled + .radio-label:before{
     box-shadow: inset 0 0 0 4px #e9ecef;
-    border-color: #b4b4b4;
-    background: #b4b4b4;
+    /* border-color: #b4b4b4;
+    background: #b4b4b4; */
+    background-color: #784BA0; background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
 }
 
 #update_user .form-group .btn,
 #add_user .form-group .btn{
     width: 100%;
     padding: .9em 1em;
-    background-color:#16db93; 
+    background-color: #784BA0;
     border: none;
     font-family: monsterrat;
     font-size: 1em;

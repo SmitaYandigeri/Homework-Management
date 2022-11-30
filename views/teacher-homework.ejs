@@ -30,7 +30,7 @@
         <li><a href="/api/profile">Profile</a></li>
         <li><a href="/api/class">MyClass</a></li>
         <li><a class="active" href="/api/homework">HomeWork</a></li>
-        <li><a href="/api/schedule">Schedule</a></li>
+        <li><a href="/api/submission">Submission</a></li>
         <li><a href="/api/logout">Logout</a></li>
       </ul>
       <label id="icon">
@@ -43,8 +43,8 @@
         <header id="header">
           <nav>
             <div class="text-center">
-                <% if (className && invitationCode) { %>
-                  <a href="#" class="nav-brand text-dark">HomeWorks For <div id="className"><%=className%></div> - 
+                <% if (invitationCode) { %>
+                  <a href="#" class="nav-brand text-dark">HomeWorks For <span id="className"><%=className%></span> - 
                     <span id="invitationCode">(<%= invitationCode %>)</span></a>
                 <%} else { %>
                   <a href="#" class="nav-brand text-dark">HomeWorks Management</a>  
@@ -99,6 +99,9 @@
                           </td>
                           <td class="tdHWId" hidden><%= homeworks[i].HW_ID %></td>
                           <td class="tdHwAction">
+                            <a href="#" title="View Submission" class="btn border-shadow submissions">
+                              <span class="text-gradient"><i class="fas fa-solid fa-eye"></i></span>
+                            </a>
                             <a href="#" title="Edit HomeWork" class="btn border-shadow edit">
                               <span class="text-gradient"><i class="fas fa-solid fa-pencil-alt"></i></span>
                             </a>

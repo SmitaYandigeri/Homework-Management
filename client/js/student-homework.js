@@ -42,6 +42,7 @@ $(document).ready(function () {
         console.log(fileName)
 
         const hwID =$(this).parent().parent().find(".tdHWId").html();
+        const hwName =$(this).parent().parent().find(".tdHWName").html();
         let code = document.getElementById("invitationCode").innerHTML;
         let invitationCode = code.substring(1, code.length-1);
 
@@ -50,11 +51,11 @@ $(document).ready(function () {
                 'Content-type': 'application/json'
             }, 
             method: "POST",
-            body: JSON.stringify({fileName, fileData, hwID, invitationCode})
+            body: JSON.stringify({fileName, fileData, hwID, invitationCode, hwName})
         })
         .then(res => res.json());
 
-        location.reload();
+        $(location).attr('href','/api/student-homework?hwID='+encodeURIComponent(hwID)+'&invitationCode='+encodeURIComponent(invitationCode));    
     
     });
 

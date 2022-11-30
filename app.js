@@ -6,7 +6,7 @@ const { request, response, application } = require("express");
 const { register, login, 
     addClass, updateClass, deleteClass, getClassesForTeacher, 
     addTeacherHomework, getHomeWorksForClass, deleteHomework, updateHomework, 
-    getClassesForStudent, joinClassForStudent, getHomeWorksForClassByStudent, dropClassForStudent, addHomeworkSubmission} = require("./database")
+    getClassesForStudent, joinClassForStudent, getHomeWorksForClassByStudent, dropClassForStudent, addHomeworkSubmission, getSubmissionForHomework} = require("./database")
 const bodyParser = require("body-parser");
 const e = require("express");
 const session = require("express-session");
@@ -315,9 +315,29 @@ app.get("/api/homework", (request, response) => {
     }
 })
 
-app.get("/api/schedule", (request, response) => {
+app.get("/api/submission", (request, response) => {
     if (request.session.user){
-        response.render('teacher-schedule');
+        var submissions;
+        console.log(request.query)
+        var invitationCode = request.query.invitationCode;
+        var hwID = request.query.hwID;
+
+        if (invitationCode && hwID) {
+            getSubmissionForHomework(invitationCode, hwID, (error, result) => {
+                if (error) {
+                    response.end();
+                    console.log("failed To Return Data")
+                    return error;
+                } else {
+                    submissions = JSON.parse(JSON.stringify(result));
+                    console.log(submissions)
+                    response.render('teacher-submission', {submissions:submissions});
+                }
+            });
+        } else {
+            response.render('teacher-submission', {submissions:submissions});
+        }    
+
     } else {
         response.sendFile('403.html', {root: __dirname+'/views'});
     }
@@ -404,15 +424,6 @@ app.get("/api/student-homework", (request, response) => {
         } else {
             response.render('student-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
         }
-    } else {
-        response.sendFile('403.html', {root: __dirname+'/views'});
-    }
-})
-
-app.get("/api/student-schedule", (request, response) => {
-    console.log("Rendering Student Schedule...")
-    if (request.session.user){
-        response.render('student-schedule');
     } else {
         response.sendFile('403.html', {root: __dirname+'/views'});
     }
