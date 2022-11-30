@@ -5,14 +5,15 @@
   box-sizing: border-box;
   font-family: monsterrat;
 }
+
 html,body{
   display: grid;
   height: 100%;
   width: 100%;
   place-items: center;
-  /* background: -webkit-linear-gradient(left, #a445b2, #fa4299); */ 
   background-image: url("../img/background.jpg");
 }
+
 ::selection{
   background: #a2dd1900;
   color: #fff;
@@ -25,10 +26,12 @@ html,body{
   border-radius: 10px;
   box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
 }
+
 .wrapper .title-text{
   display: flex;
   width: 200%;
 }
+
 .wrapper .title{
   width: 50%;
   font-size: 35px;
@@ -36,6 +39,7 @@ html,body{
   text-align: center;
   transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
 }
+
 .wrapper .slide-controls{
   position: relative;
   display: flex;
@@ -47,6 +51,7 @@ html,body{
   border: 1px solid lightgrey;
   border-radius: 5px;
 }
+
 .slide-controls .slide{
   height: 100%;
   width: 100%;
@@ -59,9 +64,11 @@ html,body{
   z-index: 1;
   transition: all 0.6s ease;
 }
+
 .slide-controls label.signup{
   color: #000;
 }
+
 .slide-controls .slider-tab{
   position: absolute;
   height: 100%;
@@ -73,40 +80,49 @@ html,body{
   background-color: #784BA0; background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);  
   transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
 }
+
 input[type="radio"]{
   display: none;
 }
+
 #signup:checked ~ .slider-tab{
   left: 50%;
 }
+
 #signup:checked ~ label.signup{
   color: #fff;
   cursor: default;
   user-select: none;
 }
+
 #signup:checked ~ label.login{
   color: #000;
 }
 #login:checked ~ label.signup{
   color: #000;
 }
+
 #login:checked ~ label.login{
   cursor: default;
   user-select: none;
 }
+
 .wrapper .form-container{
   width: 100%;
   overflow: hidden;
   max-width: 450px;
 }
+
 .form-container .form-inner{
   display: flex;
   width: 200%;
 }
+
 .form-container .form-inner form{
   width: 50%;
   transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
 }
+
 .form-inner form .field{
   height: 50px;
   width: 100%;
@@ -117,6 +133,7 @@ input[type="radio"]{
 .form-inner form .field{
   margin-bottom: 45px;
 }
+
 .form-inner form .field input{
   height: 100%;
   width: 100%;
@@ -128,24 +145,30 @@ input[type="radio"]{
   font-size: 17px;
   transition: all 0.3s ease;
 }
+
 .form-inner form .field input:focus{
   border-color: #fcd083;
   /* box-shadow: inset 0 0 3px #fb6aae; */
 }
+
 .form-inner form .field input::placeholder{
   color: #999;
   transition: all 0.3s ease;
 }
+
 form .field input:focus::placeholder{
   color: #b3b3b3;
 }
+
 .form-inner form .pass-link{
   margin-top: 5px;
 }
+
 .form-inner form .signup-link{
   text-align: center;
   margin-top: 30px;
 }
+
 .form-inner form .pass-link a,
 .form-inner form .signup-link a{
   color: #252016;
@@ -155,6 +178,7 @@ form .field input:focus::placeholder{
 .form-inner form .signup-link a:hover{
   text-decoration: underline;
 }
+
 form .btn{
   height: 50px;
   width: 100%;
@@ -162,6 +186,7 @@ form .btn{
   position: relative;
   overflow: hidden;
 }
+
 form .btn .btn-layer{
   height: 100%;
   width: 300%;
@@ -171,9 +196,11 @@ form .btn .btn-layer{
   background-color: #784BA0; background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);  border-radius: 5px;
   transition: all 0.4s ease;;
 }
+
 form .btn:hover .btn-layer{
   left: 0;
 }
+
 form .btn input[type="submit"]{
   height: 100%;
   width: 100%;
@@ -188,8 +215,3 @@ form .btn input[type="submit"]{
   font-weight: 500;
   cursor: pointer;
 }
-
-
-
-
-

@@ -69,9 +69,17 @@ const connection = mysql.createPool({
     },
 
     updateClass : (data, user , callback)=>{
-        const ADDCLASS_QUERY= "UPDATE HOMEWORK.CLASS SET CLASS_NAME = ?, CLASS_CODE=? WHERE TEACHER_EMAIL_ID = ? AND INVITATION_CODE = ?;";
-        
-        connection.query(ADDCLASS_QUERY, [data.body.className, data.body.classCode, user.EMAIL_ID, data.body.invitationCode],
+        const UPDATE_TEACHER_CLASS_QUERY= "UPDATE HOMEWORK.CLASS SET CLASS_NAME = ?, CLASS_CODE=? WHERE TEACHER_EMAIL_ID = ? AND INVITATION_CODE = ?;";
+        const UPDATE_STUDENT_CLASS_QUERY= "UPDATE HOMEWORK.S_CLASS SET CLASS_NAME = ?, CLASS_CODE=? WHERE INVITATION_CODE = ?;";
+
+        connection.query(UPDATE_TEACHER_CLASS_QUERY, [data.body.className, data.body.classCode, user.EMAIL_ID, data.body.invitationCode],
+            (error, result, fields) => {
+                if (error) {
+                    callback(error);
+                }
+        });
+
+        connection.query(UPDATE_STUDENT_CLASS_QUERY, [data.body.className, data.body.classCode, data.body.invitationCode],
             (error, result, fields) => {
                 if (error) {
                     callback(error);
