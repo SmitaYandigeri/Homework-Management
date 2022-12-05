@@ -1,3 +1,8 @@
+/**
+ * Developed By : Yandigeri, Smita 
+ * This file has scripts and API call that helps Teacher to Add new homework, edit existing homework, delete class and View submission for the homework  
+ */
+
 var emptyHomeworkRow = "<tr class='trNewRow'>"; 
 emptyHomeworkRow = emptyHomeworkRow + "    <td class='tdSlNo'>";
 emptyHomeworkRow = emptyHomeworkRow + "    </td>";

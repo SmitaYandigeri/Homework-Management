@@ -1,3 +1,8 @@
+/*
+* Developed By : Yandigeri, Smita 
+* This class starts server on 5000 port and host API for DB interaction
+*/
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -421,6 +426,7 @@ app.get("/api/student-homework", (request, response) => {
                     response.render('student-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
                 }
             });
+            
         } else {
             response.render('student-homework', {homeworks:homeworks, className:className, invitationCode:invitationCode});
         }

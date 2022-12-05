@@ -1,3 +1,8 @@
+<!--**
+ * Developed By : Balakrishnan, RajKrithika[html changes] & Yandigeri, Smita [ejs changes]
+ * This is a Student Class Screen
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,6 +81,9 @@
                           <td class="tdAction">
                             <a href="#" title="View Homework" class="btn border-shadow view">
                                 <span class="text-gradient"><i class="fas fa-solid fa-eye"></i></span>
+                                <% if (classes[i].NOTIFICATIONS) { %>
+                                  <span class="notification"><%= classes[i].NOTIFICATIONS %></span>
+                                <% } %> 
                             </a>
                             <a href="#" title="Drop Class" class="btn border-shadow drop">
                               <span class="text-gradient"><i class="fas fa-solid fa-arrow-right-from-bracket"></i></span>

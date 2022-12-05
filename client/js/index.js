@@ -1,3 +1,8 @@
+/**
+ * Developed By : Balakrishnan, RajKrithika
+ * This file has scripts for validating user and making calls on Sign up and Sign in for users 
+ */
+
 const loginText = document.querySelector(".title-text .login");
 const loginForm = document.querySelector("form.login");
 const loginBtn = document.querySelector("label.login");

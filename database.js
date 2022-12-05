@@ -1,3 +1,9 @@
+/*
+* Developed By : Yandigeri, Smita 
+* This class performs DB operations on MY SQL DB
+*/
+
+
 const mysql =  require("mysql");
 const dotenv = require("dotenv");
 const moment = require("moment");
@@ -190,7 +196,9 @@ const connection = mysql.createPool({
     },
 
     getClassesForStudent : (user, callback) => {
-        const CLASSES_FOR_STUDNET = "SELECT * FROM HOMEWORK.S_CLASS WHERE STUDENT_EMAIL_ID = ? ORDER BY CREATE_TS";
+        const CLASSES_FOR_STUDNET = "SELECT SC.STUDENT_EMAIL_ID , SC.CLASS_NAME, SC.CLASS_CODE, SC.INVITATION_CODE, COUNT(HW_ID) AS NOTIFICATIONS FROM HOMEWORK.S_CLASS SC " +
+        " LEFT JOIN HOMEWORK.T_HOMEWORKS HW ON SC.INVITATION_CODE = HW.INVITATION_CODE AND SC.LAST_VISIT_TS < HW.CREATE_TS " +
+        " GROUP BY SC.STUDENT_EMAIL_ID , SC.CLASS_NAME, SC.CLASS_CODE, SC.INVITATION_CODE HAVING STUDENT_EMAIL_ID = ? ORDER BY SC.CREATE_TS";
         connection.query(CLASSES_FOR_STUDNET, [user.EMAIL_ID],
             (error, result, fields) => {
                 if (error) {
@@ -220,6 +228,17 @@ const connection = mysql.createPool({
         const FETCH_HOMEWORKS_BY_INVITITION = "SELECT SH.*, SS.SUB_FILE_DATA FROM HOMEWORK.T_HOMEWORKS SH" +
         " LEFT JOIN HOMEWORK.S_SUBMISSIONS SS ON SH.HW_ID = SS.HW_ID AND SS.INVITATION_CODE = SH.INVITATION_CODE " +
         " WHERE SH.INVITATION_CODE=? ORDER BY SH.CREATE_TS;";
+
+        const SET_LAST_VISIT_TIME = "UPDATE HOMEWORK.S_CLASS SET LAST_VISIT_TS = ? WHERE INVITATION_CODE = ?;"
+        const createTs = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+
+        connection.query(SET_LAST_VISIT_TIME, [createTs, invitationCode],
+            (error, result, fields) => {
+                if (error) {
+                    callback(error);
+                } 
+        });
+
         connection.query(FETCH_HOMEWORKS_BY_INVITITION, [invitationCode],
             (error, result, fields) => {
                 if (error) {

@@ -1,3 +1,10 @@
+/**
+ * Developed By : Yandigeri, Smita 
+ * This file has scripts and API call that helps Teacher to Add new class, edit existing class, delete class and View Homework functionalities  
+ * Referenced/Template Used From Video: https://www.youtube.com/watch?v=eWHJ0JS4eIM&t=341s
+*/
+
+
 var emptyClassRow = "<tr class='trNewRow'>"; 
 emptyClassRow = emptyClassRow + "    <td class='tdSlNo'>";
 emptyClassRow = emptyClassRow + "    </td>";
@@ -65,7 +72,7 @@ $(document).ready(function () {
     
     }); 
 
-    //Update Edit Class
+    //Update Edited Class
     $('#tblData').on('click', '.update', async function () { 
         $(this).parent().parent().remove();
         const className =  $(this).parent().parent().find(".className").val();
@@ -106,7 +113,7 @@ $(document).ready(function () {
         location.reload();
     });
     
-    //View Homwork Class
+    //View Homwork for Teacher
     $('#tblData').on('click', '.view', async function () { 
         console.log("View Homeworks")
         const invitationCode = $(this).parent().parent().find(".tdInvitation").html();

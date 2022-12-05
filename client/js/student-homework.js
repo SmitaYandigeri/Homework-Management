@@ -1,3 +1,8 @@
+/**
+ * Developed By : Yandigeri, Smita 
+ * This file has scripts and API call that helps Students to Make Submissions For Homeworks  
+ */
+
 var actionForEdit = "<a title='Save' class='btn border-shadow save-submit'><span class='text-gradient'><i class='fas fa-save'></i></span></a>"
 actionForEdit = actionForEdit + "<a title='Cancel' class='btn border-shadow submit-cancel'><span class='text-gradient'><i class='fas fa-times'></i></span></a>"
 
@@ -6,12 +11,13 @@ $(document).ready(function () {
     var fileData;
     var fileName;
 
-    //Return To Class Page
+    //Return To Student Class Page on 'Back to Class' button Click
     $("#btnback").click(function () { 
         console.log("Rediricting To Classes")
         $(location).attr('href','/api/student-class');
     });
 
+    //Prepares the submission row on click of Submit
     $('#tblData').on('click', '.submit', async function () { 
         console.log("Editing the Homework");
         const hwName =$(this).parent().parent().find(".tdHWStatus").html();
@@ -32,12 +38,12 @@ $(document).ready(function () {
         })
     }); 
     
-    //Cancel Submission    
+    //Cancel Submission on Click Of Cancel    
     $('#tblData').on('click', '.submit-cancel', function () { 
         location.reload();
     });
 
-    //Save Submission    
+    //Submits Homework using API call and stores the Homeork in to DB  
     $('#tblData').on('click', '.save-submit', function () { 
         console.log(fileName)
 

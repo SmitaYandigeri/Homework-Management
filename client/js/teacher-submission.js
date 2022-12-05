@@ -1,3 +1,8 @@
+/**
+ * Developed By : Yandigeri, Smita 
+ * This file has scripts and API to view submissions for homework  
+ */
+
 $(document).ready(function () {
 
     //Return To Class Page

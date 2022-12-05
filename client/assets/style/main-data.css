@@ -1,3 +1,6 @@
+/**
+ * Developed By : Balakrishnan, RajKrithika 
+ */
 * {
     padding: 0;
     margin: 0;
@@ -34,9 +37,21 @@ a {
 }
 
 .border-shadow{
+    position: relative;
     border: 1px solid var(--border-btn);
     box-shadow: 1px 3px 3px #e9ecef;
     margin-top: 10px;
+}
+
+.border-shadow .notification {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 1px 2.5px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+  
 }
 
 .border-shadow:hover{
